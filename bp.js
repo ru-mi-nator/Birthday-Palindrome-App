@@ -132,10 +132,30 @@ function getNextPalindromeDate(date) {
     return [ctr, nextDate];
 }
 
-var date = {
-    day: 29,
-    month: 08,
-    year: 2001
-};
+var dateInput = document.querySelector("#bday-input");
+var showBtn = document.querySelector("#show-btn");
+var result = document.querySelector("#result");
 
-console.log(getNextPalindromeDate(date));
+function clickHandler() {
+    var bdayStr = dateInput.value;
+
+    if (bdayStr != '') {
+        var listOfDate = bdayStr.split('-');
+        var date = {
+            day: Number(listOfDate[2]),
+            month: Number(listOfDate[1]),
+            year: Number(listOfDate[0])
+        };
+
+        var isPalindrome = checkPalindromeForAllDateTypes(date);
+        if (isPalindrome) {
+            result.innerText = 'Yay! Your Birthday Is A Palindrome!!'
+        } else {
+            var [ctr, nextDate] = getNextPalindromeDate(date);
+            result.innerText = `The next palindrome date is ${nextDate.day}-${nextDate.month}-${nextDate.year}, and you missed it by just ${ctr} days!` 
+        }
+
+    }
+}
+
+showBtn.addEventListener('click', clickHandler);
